@@ -540,6 +540,7 @@ The structure emitted by the observable is an object with properties:
    - begin - enter a logic
    - next - validate or transform intercept has passed to the next logic/middleware
    - nextDisp - validate or transform intercept was successful but needs to be dispatched
+   - nextError - error thrown while the middleware next call was executing, possibly from downstream middleware, reducer, or render
    - filtered - validate or transform passed undefined so action is filtered and not passed to other logic/middleware/reducers
    - cancelled - intercept was cancelled either from cancelType or take latest
    - dispatch - dispAction was dispatched to store
