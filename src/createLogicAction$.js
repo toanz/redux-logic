@@ -282,7 +282,14 @@ export default function createLogicAction$({ action, logic, store, deps, cancel$
     /* post if defined, then complete */
     function postIfDefinedOrComplete(act, act$) {
       if (act) {
-        act$.next(act);
+        try {
+          act$.next(act);  // triggers call to middleware's next()
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error('error in mw next call, middlware/reducer/render:', err);
+          const msg = (err && err.message) ? err.message : err;
+          monitor$.next({ action, dispAction: act, name, err: msg, op: 'nextError' });
+        }
       }
       interceptComplete = true;
       act$.complete();
